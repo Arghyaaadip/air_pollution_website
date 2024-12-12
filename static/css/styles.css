@@ -1,0 +1,332 @@
+/* Styling for the tile cards */
+.tile-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    overflow: hidden;
+    border-radius: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: #fff;
+}
+
+.tile-card img {
+    width: 100%;
+    height: 150px; /* Adjust the image height to blend seamlessly */
+    object-fit: cover;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.tile-card .card-body {
+    flex-grow: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tile-card .btn {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    background-color: #ff6f61; /* Add a complementary button color */
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.tile-card:hover img {
+    transform: scale(1.1);
+    filter: brightness(0.9);
+}
+
+.tile-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tile-card:hover .btn {
+    background-color: #e95c50;
+    transform: scale(1.1);
+}
+
+/* Container adjustments for tiles */
+.container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: nowrap; /* Ensure tiles remain in a single row */
+    overflow-x: auto; /* Allow horizontal scrolling for smaller screens */
+    padding: 0 10px; /* Add padding for aesthetics */
+}
+
+.container .row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: nowrap; /* Prevent wrapping */
+}
+
+/* Ensure tiles are evenly sized in a single row */
+.tile-card {
+    flex: 0 0 calc(25% - 20px); /* Adjust tile width to fit 4 tiles in one row with gap */
+    max-width: 250px; /* Optional: Set a maximum width for consistency */
+}
+
+/* Responsive design for medium and small screens */
+@media (max-width: 768px) {
+    .tile-card {
+        flex: 0 0 calc(50% - 20px); /* Adjust for two tiles per row on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .tile-card {
+        flex: 0 0 calc(100% - 20px); /* Single tile per row for very small screens */
+    }
+}
+
+/* Hero section styling */
+.hero-section {
+    position: relative;
+    background: url('/images/your-bg-image.jpg') no-repeat center center / cover;
+    height: 300px; /* Adjust height for the top image section */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-section h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #ffffff; /* White background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 5px 15px; /* Adjusted padding to reduce width */
+    font-family: 'Arial', sans-serif;
+    display: flex; /* Flex layout for alignment */
+    align-items: center; /* Vertically center items */
+    justify-content: space-between; /* Align items to ends */
+}
+
+.navbar-nav {
+    margin: 0; /* Remove any margin for alignment */
+    display: flex;
+    gap: 10px; /* Adds spacing between nav items */
+}
+
+.navbar-nav .nav-link {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333; /* Dark text color */
+    padding: 5px 10px; /* Reduced padding for compact links */
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: #ffffff; /* White text on hover */
+    background-color: #dc3545; /* Red background for active or hover */
+    border-radius: 5px; /* Rounded edges for nav links */
+}
+
+.navbar-toggler {
+    border: none;
+    outline: none;
+}
+
+.navbar-toggler-icon {
+    color: #333;
+}
+
+/* Ensure navbar stays fixed at the top */
+.navbar.fixed-top {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030; /* Ensure it stays above other content */
+}
+
+/* Adjust page padding for fixed navbar */
+body {
+    padding-top: 60px; /* Adjust padding for the fixed navbar */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes up the entire viewport height *//*Add the following CSS to ensure the body stretches to fit the viewport when there’s not enough content:*/
+}
+
+main {
+    flex: 1; /* Make the main content take up available space */
+}
+
+
+/* Main section styling */
+main.contact-us-section {
+    flex: 1; /* Ensures the main section takes up available space */
+    padding: 50px 0;
+    background-color: #e9f4fc; /* Light blue background */
+}
+
+/* Updated Contact Page Styles */
+.contact-us-section {
+    padding: 50px 0;
+    background-color: #f2f6fc; /* Light blue background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: calc(100vh - 70px); /* Ensure footer stays at the bottom */
+}
+
+.contact-form {
+    max-width: 500px;
+    width: 100%;
+    padding: 30px;
+    background: #ffffff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin: 0 auto; /* Center align form horizontally */
+}
+
+.contact-heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #2c3e50; /* Dark blue for heading */
+    text-align: left; /* Align heading to the left */
+}
+
+.contact-subheading {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #555;
+    text-align: left; /* Align subheading to the left */
+}
+
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form .form-control {
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #f9f9f9; /* Light background inside input fields */
+    transition: border-color 0.3s ease;
+}
+
+.contact-form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.contact-form textarea.form-control {
+    height: 120px;
+    resize: none;
+}
+
+.contact-form button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px 20px;
+    border: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer Styling */
+footer {
+    background-color: #f7f7f7;
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+    position: relative; /* Change from fixed to relative */
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+/* About Page Styling */
+#about-page {
+    display: flex;
+    height: 100vh; /* Full height of the viewport */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden; /* Remove unnecessary scrollbars */
+}
+
+#about-page .text-section {
+    flex: 1; /* Takes up exactly 50% of the page */
+    background-color: #fcfcf2; /* Match this with the image section */
+    display: flex;
+    flex-direction: column; /* Align content vertically */
+    justify-content: flex-start; /* Align content to the top */
+    align-items: flex-start; /* Align text to the left */
+    padding: 50px; /* Add padding for spacing */
+    box-sizing: border-box;
+    overflow-y: auto; /* Allow scrolling inside the text section */
+}
+
+#about-page .text-section h2 {
+    margin-bottom: 20px;
+    font-size: 2.5rem; /* Adjusted font size for better visibility */
+    color: #333; /* Dark text for contrast */
+    text-align: left; /* Align heading to the left */
+    font-family: 'Georgia', serif; /* Add an elegant font */
+}
+
+#about-page .text-section p {
+    font-size: 1rem; /* Adjust font size for readability */
+    color: #555; /* Slightly darker text for better contrast */
+    line-height: 1.8; /* Improve readability */
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif; /* Clean, modern font */
+}
+
+#about-page .image-section {
+    flex: 1; /* Takes up exactly 50% of the page */
+    background: url('/images/about3.jpg') no-repeat center center; /* Center and scale the image */
+    background-size: cover; /* Cover the entire section */
+    height: 100%; /* Full height to match the parent */
+    box-sizing: border-box;
+}
+
+/* Remove scrollbar from middle and ensure it's on the page */
+body {
+    overflow: hidden; /* Prevent overflow from body */
+}
+
+html {
+    overflow-y: scroll; /* Ensure scrollbar is on the left side */
+    scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+
+footer {
+    margin: 0; /* Remove any extra spacing around the footer */
+    box-sizing: border-box;
+}

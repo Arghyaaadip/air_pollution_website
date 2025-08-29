@@ -1,2 +1,23 @@
-.env
+﻿# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.log
+
+# Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Node
 node_modules/
+
+# VS Code & OS
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.env.*

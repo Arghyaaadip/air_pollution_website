@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Curated Materials{% endblock %}
+
+{% block content %}
+  <!-- Hero Section -->
+  <header style="
+      background: url({{ url_for('static', filename='images/collections-bg.jpg') }})
+        center/cover no-repeat;
+      height: 400px;
+      position: relative;
+    ">
+    <div class="overlay d-flex flex-column justify-content-center align-items-center text-white"
+         style="background: rgba(0,0,0,0.5); width:100%; height:100%;">
+      <h1 class="display-4 font-weight-bold">Explore Knowledge</h1>
+      <p class="lead">
+        Dive into science communication materials on air pollution and sustainability.
+      </p>
+    </div>
+  </header>
+
+  <!-- Content Section -->
+  <div class="container mt-5 text-center">
+    <h2 class="text-center mb-4">Curated Materials</h2>
+    <p class="text-muted">
+      Click the button below to explore a spreadsheet of all curated materials.
+    </p>
+    <a href="{{ sheet_url }}" target="_blank" class="btn btn-primary btn-lg">
+      View Curated Materials
+    </a>
+  </div>
+{% endblock %}

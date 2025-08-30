@@ -1,2 +1,37 @@
-.env
+# Python
+.venv/
+.venv2/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Node
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Env & secrets
+.env
+.env.*
+backend/scicomwebsite.json
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Builds / dist / coverage
+dist/
+build/
+.coverage
+coverage/
+htmlcov/
+
+backend/scicomwebsite.json
+
+backend/admin_users.json

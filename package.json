@@ -1,18 +1,12 @@
 {
   "name": "air_pollution_website",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
+  "main": "server.js",
   "license": "ISC",
-  "description": "",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
-    "dotenv": "^16.4.7",
-    "ejs": "^3.1.10",
-    "express": "^4.21.1",
-    "nodemailer": "^6.9.16"
+    "express": "^4.21.1"
   }
 }

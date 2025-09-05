@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{% block title %}Air Pollution Educational Website{% endblock %}</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="/css/styles.css"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"/>
+  {% block head_extra %}{% endblock %}
 </head>
-<body id="about-page">
-  <!-- Navbar -->
+<body {% block body_attrs %}{% endblock %}>
+  <!-- Navbar: shared -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,6 +21,12 @@
         <li class="nav-item"><a class="nav-link" href="/collections">Collections</a></li>
         <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
         <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+        {% if session.get('admin') %}
+          <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+          <li class="nav-item"><a class="nav-link" href="/admin/logout">Logout</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link admin-link" href="/admin/login" rel="nofollow">Admin login</a></li>
+        {% endif %}
       </ul>
     </div>
   </nav>
@@ -35,8 +42,13 @@
     {% block content %}{% endblock %}
   </main>
 
+  <footer class="text-center mt-5 p-4 bg-light">
+    <p>&copy; 2024 Air Pollution Educational Website. All Rights Reserved.</p>
+  </footer>
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -342,3 +342,47 @@ footer {
   width: 100%;
   height: 100%;
 }
+
+/* Home hero background (no Jinja in HTML to keep linters happy) */
+.home-hero {
+  background-image: url('/static/images/background.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 400px;
+  position: relative;
+}
+
+/* in backend/static/css/styles.css */
+.collections-hero {
+  background-image: url('/static/images/collections-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 400px;
+  position: relative;
+}
+.collections-hero .overlay {
+  background: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+}
+
+
+/* Contact page enhancements */
+.contact-hero {
+  background: linear-gradient(135deg, #eef4ff 0%, #f8fbff 100%);
+  border-bottom: 1px solid #e9eef7;
+}
+.contact-card {
+  border: 0;
+  border-radius: 0.75rem;
+}
+.contact-icon {
+  width: 48px;
+  height: 48px;
+  opacity: .9;
+}
+.copy-btn {
+  font-size: .9rem;
+}

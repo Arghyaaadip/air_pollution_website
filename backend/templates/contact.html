@@ -1,88 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css"> <!-- Link your styles.css -->
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/collections">Collections</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contact">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">About</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
 
-    <!-- Contact Section -->
-    <section class="contact-us-section">
-        <div class="container">
-            <div class="contact-form">
-                <h2 class="contact-heading">Contact Us</h2>
-                <p class="contact-subheading">
-                    We'd love to hear from you! Reach out with any questions or feedback.
-                </p>
-                <form action="/contact" method="post">
-                    <div class="form-group">
-                        <input
-                            type="text"
-                            name="name"
-                            class="form-control"
-                            placeholder="Name"
-                            required
-                        />
-                    </div>
-                    <div class="form-group">
-                        <input
-                            type="email"
-                            name="email"
-                            class="form-control"
-                            placeholder="Email"
-                            required
-                        />
-                    </div>
-                    <div class="form-group">
-                        <textarea
-                            name="message"
-                            class="form-control"
-                            placeholder="Message"
-                            rows="5"
-                            required
-                        ></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
+{% block content %}
+<section class="contact-hero py-5">
+  <div class="container">
+    <div class="mx-auto" style="max-width: 760px;">
+      <div class="card contact-card shadow-sm">
+        <div class="card-body p-4 p-md-5">
+          <div class="d-flex align-items-center mb-3">
+            <span class="mr-3">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3.75 6.75h16.5a.75.75 0 01.75.75v9a.75.75 0 01-.75.75H3.75a.75.75 0 01-.75-.75v-9a.75.75 0 01.75-.75z" stroke="#0d6efd" stroke-width="1.5"/>
+                <path d="M3.75 7.5l8.25 6 8.25-6" stroke="#0d6efd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <h1 class="h3 mb-0">Contact</h1>
+          </div>
 
-    <!-- Footer -->
-    <footer class="bg-light">
-        <div class="container text-center py-3">
-            <p>&copy; 2024 Air Pollution Educational Website. All Rights Reserved.</p>
-        </div>
-    </footer>
+          <p class="lead mb-3">
+            Have a query or suggestion? Get in touch with our coordinator,
+            <strong>Margaret Gold</strong>.
+          </p>
 
-    <!-- Bootstrap Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+          <div class="d-flex flex-wrap align-items-center">
+            <a href="mailto:m.j.gold@cwts.leidenuniv.nl" class="btn btn-primary btn-lg mr-3 mb-2">
+              Email Margaret
+            </a>
+            <button id="copyEmail" class="btn btn-outline-secondary mb-2 copy-btn" type="button">
+              Copy email
+            </button>
+            <span id="copyHint" class="text-muted small ml-3 mb-2" style="display:none;">Copied!</span>
+          </div>
+
+          <p class="mt-3 mb-0 text-muted">
+            Or write to: <a href="mailto:m.j.gold@cwts.leidenuniv.nl">m.j.gold@cwts.leidenuniv.nl</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (function () {
+    var btn = document.getElementById('copyEmail');
+    var hint = document.getElementById('copyHint');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var email = 'm.j.gold@cwts.leidenuniv.nl';
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(email).then(showHint);
+      } else {
+        var el = document.createElement('textarea');
+        el.value = email;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        showHint();
+      }
+    });
+    function showHint() {
+      if (!hint) return;
+      hint.style.display = 'inline';
+      setTimeout(function () { hint.style.display = 'none'; }, 1500);
+    }
+  })();
+</script>
+{% endblock %}

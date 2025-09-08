@@ -35,3 +35,9 @@ htmlcov/
 backend/scicomwebsite.json
 
 backend/admin_users.json
+
+
+/scicomwebsite*.json
+/*service_account*.json
+/backend/scicomwebsite*.json
+/backend/*service_account*.json

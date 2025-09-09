@@ -5,6 +5,9 @@ import shutil
 import smtplib
 import ssl
 import subprocess
+from dotenv import load_dotenv
+load_dotenv()
+from admin import admin_bp
 from email.mime.text import MIMEText
 from pathlib import Path
 
@@ -17,6 +20,11 @@ from flask import (
     flash,
     send_from_directory,
 )
+
+app = Flask(__name__)
+# for flash/session cookies
+app.config["SECRET_KEY"] = os.getenv("FLASK_SECRET", "dev-change-me")
+
 
 # --- Paths & env ---
 BASE_DIR = Path(__file__).resolve().parent  # backend/

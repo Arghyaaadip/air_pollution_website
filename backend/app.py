@@ -182,7 +182,7 @@ def other():
 
 # ---- Admin blueprint registration ----
 # (Routes live in backend/admin/__init__.py)
-from backend.old_admin import admin_bp
+from admin import admin_bp
 app.register_blueprint(admin_bp, url_prefix="/admin")
 
 # ---- Entry point ----

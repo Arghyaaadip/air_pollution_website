@@ -1,6 +1,37 @@
 {% extends "base.html" %}
 {% block title %}Admin dashboard{% endblock %}
 {% block content %}
+
+<style>
+  /* Page-scoped hammer to make all text visible in the left admin card */
+  .admin-form, .admin-form * {
+    color: #111 !important;
+    -webkit-text-fill-color: #111 !important; /* just in case */
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .admin-form .form-label,
+  .admin-form h5,
+  .admin-form h6 {
+    display: block !important;
+    color: #111 !important;
+    font-size: 1rem !important;
+    line-height: 1.35 !important;
+  }
+  .admin-form .form-control,
+  .admin-form .form-select,
+  .admin-form textarea {
+    color: #111 !important;
+    background: #fff !important;
+    border-color: #ced4da !important;
+  }
+  .admin-form .form-control::placeholder,
+  .admin-form textarea::placeholder {
+    color: #6c757d !important;  /* Bootstrap placeholder gray */
+    opacity: 1 !important;
+  }
+</style>
+
 <div class="container" style="margin-top:6rem;">
 
   <div class="d-flex justify-content-between align-items-center mb-3">
@@ -8,66 +39,146 @@
     <a class="btn btn-outline-secondary" href="{{ url_for('admin.logout') }}">Logout</a>
   </div>
 
-  <div class="card shadow-sm mb-4">
-    <div class="card-body">
-      <h5 class="mb-3">Add new material</h5>
-      <form method="post" action="{{ url_for('admin.add_row') }}">
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Title</label>
-            <input class="form-control" name="title" required>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label">URL</label>
-            <input class="form-control" name="url" type="url" required>
-          </div>
-          <div class="col-md-4 mb-3">
-            <label class="form-label">Audience</label>
-            <input class="form-control" name="audience" placeholder="e.g., Schools, Public">
-          </div>
-          <div class="col-md-4 mb-3">
-            <label class="form-label">Status</label>
-            <select class="form-control" name="status">
-              <option>Published</option>
-              <option>Draft</option>
-              <option>Archived</option>
-            </select>
-          </div>
-          <div class="col-md-12 mb-3">
-            <label class="form-label">Notes</label>
-            <textarea class="form-control" name="notes" rows="2"></textarea>
-          </div>
-        </div>
-        <button class="btn btn-primary">Add row</button>
-      </form>
-    </div>
-  </div>
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-body admin-form">
+          <h5 class="mb-3">Add new material</h5>
 
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <h5 class="mb-3">Sheet preview</h5>
-      {% if headers and preview %}
-        <div class="table-responsive">
-          <table class="table table-sm table-striped">
-            <thead>
-              <tr>
-                {% for h in headers %}<th>{{ h }}</th>{% endfor %}
-              </tr>
-            </thead>
-            <tbody>
-              {% for row in preview %}
-                <tr>
-                  {% for h in headers %}<td>{{ row.get(h, '') }}</td>{% endfor %}
-                </tr>
+          <!-- One-column, all-optional form -->
+          <form method="post" action="{{ url_for('admin.add_row') }}">
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input class="form-control" name="title" placeholder="e.g., Infographic in Urban Planning">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">URL</label>
+              <input class="form-control" name="url" type="url" placeholder="https://...">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Target Audience</label>
+              <input class="form-control" name="target_audience" placeholder="e.g., School students, Public">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Author(s)</label>
+              <input class="form-control" name="authors" placeholder="e.g., Jane Doe; John Smith">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Publisher</label>
+              <input class="form-control" name="publisher" placeholder="e.g., Springer">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Date Published</label>
+              <input class="form-control" name="date_published" placeholder="e.g., 2024 or 2024-05-01">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Resource Theme</label>
+              <input class="form-control" name="resource_theme" placeholder="e.g., Engagement or Impact">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Resource Type</label>
+              <input class="form-control" name="resource_type" placeholder="e.g., Image, Still Image, Report">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Keywords</label>
+              <input class="form-control" name="keywords" placeholder="comma-separated (optional)">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Language</label>
+              <input class="form-control" name="language" placeholder="e.g., English">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Status</label>
+              <select class="form-control" name="status">
+                <option>Published</option>
+                <option>Draft</option>
+                <option>Archived</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Notes</label>
+              <textarea class="form-control" name="notes" rows="2" placeholder="Optional notes"></textarea>
+            </div>
+
+            <button class="btn btn-primary">Add row</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0">Manage existing</h6>
+            <small class="text-muted">first {{ preview|length if preview else 0 }} rows</small>
+          </div>
+
+          {% if manage_rows %}
+            <form method="post" action="{{ url_for('admin.update_row') }}">
+              {% for row in manage_rows %}
+                <div class="border rounded p-2 mb-2">
+                  <div class="d-flex justify-content-between">
+                    <strong>#{{ row.sheet_row }}</strong>
+                    <a class="text-danger small" href="{{ url_for('admin.delete_row', sheet_row=row.sheet_row) }}"
+                       onclick="return confirm('Delete row {{ row.sheet_row }}?')">Delete</a>
+                  </div>
+                  {% for h in headers %}
+                    <input type="hidden" name="header_{{ loop.index0 }}" value="{{ h }}">
+                    <div class="mb-2">
+                      <label class="form-label form-label-sm">{{ h }}</label>
+                      <input class="form-control form-control-sm" name="field_{{ loop.index0 }}"
+                             value="{{ row.get(h, '') }}">
+                    </div>
+                  {% endfor %}
+                  <input type="hidden" name="sheet_row" value="{{ row.sheet_row }}">
+                  <button class="btn btn-sm btn-outline-primary">Update row</button>
+                </div>
               {% endfor %}
-            </tbody>
-          </table>
+            </form>
+          {% else %}
+            <p class="text-muted mb-0">No rows to manage yet.</p>
+          {% endif %}
         </div>
-      {% else %}
-        <p class="text-muted mb-0">No preview available.</p>
-      {% endif %}
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h6 class="mb-3">Sheet preview</h6>
+          {% if headers and preview %}
+            <div class="table-responsive">
+              <table class="table table-sm table-striped">
+                <thead>
+                  <tr>
+                    {% for h in headers %}<th>{{ h }}</th>{% endfor %}
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in preview %}
+                    <tr>
+                      {% for h in headers %}<td>{{ row.get(h, '') }}</td>{% endfor %}
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p class="text-muted mb-0">No preview available.</p>
+          {% endif %}
+        </div>
+      </div>
     </div>
   </div>
-
 </div>
 {% endblock %}

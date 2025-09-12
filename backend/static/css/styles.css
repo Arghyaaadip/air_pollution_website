@@ -53,23 +53,18 @@
     transform: scale(1.1);
 }
 
-/* Container adjustments for tiles */
-.container {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: nowrap; /* Ensure tiles remain in a single row */
-    overflow-x: auto; /* Allow horizontal scrolling for smaller screens */
-    padding: 0 10px; /* Add padding for aesthetics */
+/* Scoped layout rules for the home tiles only */
+.home-tiles {
+  margin-top: 20px;
+  padding: 0 10px;
+}
+.home-tiles .row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap; /* allow wrapping on small screens */
 }
 
-.container .row {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: nowrap; /* Prevent wrapping */
-}
 
 /* Ensure tiles are evenly sized in a single row */
 .tile-card {
@@ -315,10 +310,8 @@ footer {
     box-sizing: border-box;
 }
 
-/* Remove scrollbar from middle and ensure it's on the page */
-body {
-    overflow: hidden; /* Prevent overflow from body */
-}
+#about-page { overflow: hidden; }
+
 
 html {
     overflow-y: scroll; /* Ensure scrollbar is on the left side */
@@ -385,4 +378,50 @@ footer {
 }
 .copy-btn {
   font-size: .9rem;
+}
+
+/* Admin page tweaks */
+.admin-wrap { padding-top: 0.25rem; }
+.admin-preview .table { font-size: .875rem; }        /* slightly denser table on preview */
+
+/* On mobile/tablet, let the preview flow normally (no sticky) */
+@media (max-width: 991.98px) {
+  .admin-preview { position: static !important; top: auto !important; }
+}
+
+
+/* --- Admin form visibility fixes --- */
+.admin-form { color: #212529; } /* ensure dark text on light card */
+.admin-form .form-label { color: #212529 !important; font-weight: 600; }
+.admin-form h5, .admin-form h6 { color: #212529 !important; }
+.admin-form input::placeholder,
+.admin-form textarea::placeholder { opacity: .65; }
+
+
+/* --- Admin form: force text to be visible --- */
+.admin-form,
+.admin-form * {
+  color: #111 !important;
+}
+
+.admin-form h5,
+.admin-form h6,
+.admin-form .form-label,
+.admin-form .form-text {
+  color: #111 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.admin-form .form-control,
+.admin-form .form-select {
+  color: #111 !important;
+  background-color: #fff !important;
+  border-color: #ced4da !important;
+}
+
+.admin-form .form-control::placeholder,
+.admin-form textarea::placeholder {
+  color: #6c757d !important;
+  opacity: 1 !important;
 }

@@ -187,7 +187,7 @@ app.register_blueprint(admin_bp, url_prefix="/admin")
 
 # ---- Entry point ----
 if __name__ == "__main__":
-    port = int(os.getenv("FLASK_PORT", "8000"))
-    debug = os.getenv("FLASK_DEBUG", "1") == "1"
-    print(f"[INFO] Flask running on http://127.0.0.1:{port} (debug={debug})")
-    app.run(host="127.0.0.1", port=port, debug=debug)
+    port = int(os.environ.get("PORT", "8080"))  # Cloud Run sets PORT
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1"
+    print(f"[INFO] Flask running on http://0.0.0.0:{port} (debug={debug})")
+    app.run(host="0.0.0.0", port=port, debug=debug)

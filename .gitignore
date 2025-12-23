@@ -41,3 +41,11 @@ backend/admin_users.json
 /*service_account*.json
 /backend/scicomwebsite*.json
 /backend/*service_account*.json
+
+
+sheets-sa.json
+*.json
+!package.json
+!package-lock.json
+admin_users.json
+.env

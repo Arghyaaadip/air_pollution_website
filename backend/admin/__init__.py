@@ -1,9 +1,8 @@
 # backend/admin/__init__.py
-import os, os.path, functools, re, bcrypt
+import os, os.path, functools, re
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from werkzeug.security import check_password_hash
 
-import gspread
-from gspread import utils as gutils  # for rowcol_to_a1
 
 admin_bp = Blueprint("admin", __name__, template_folder="../templates/admin")
 
@@ -17,14 +16,9 @@ def check_admin_password(password: str) -> bool:
     # If the secret isn't attached / env var missing, deny login
     if not ADMIN_PASSWORD_HASH:
         return False
-
     try:
-        return bcrypt.checkpw(
-            (password or "").encode("utf-8"),
-            ADMIN_PASSWORD_HASH.encode("utf-8")
-        )
+        return check_password_hash(ADMIN_PASSWORD_HASH, password or "")
     except Exception:
-        # Any unexpected formatting issue should fail closed
         return False
 
 
@@ -50,7 +44,7 @@ def login_submit():
     password = request.form.get("password") or ""
 
     if username == ADMIN_USERNAME and check_admin_password(password):
-        session["admin"] = True   # boolean flag
+        session["admin"] = True  # boolean flag
         flash("Welcome, admin!", "success")
         return redirect(url_for("admin.dashboard"))
 
@@ -126,7 +120,6 @@ def dashboard():
 @admin_bp.post("/add")
 @login_required
 def add_row():
-    # Collect optional fields (strip to keep things neat)
     title            = (request.form.get("title") or "").strip()
     url              = (request.form.get("url") or "").strip()
     target_audience  = (request.form.get("target_audience") or "").strip()
@@ -145,8 +138,6 @@ def add_row():
         flash("Google Sheets not configured (check SHEET_URL and GOOGLE_APPLICATION_CREDENTIALS).", "danger")
         return redirect(url_for("admin.dashboard"))
 
-    # Map our form names to the exact header titles in your sheet.
-    # Keep multiple keys when you're not 100% sure which header is present.
     values_map = {
         "Title":                         title,
         "URL":                           url,
@@ -164,7 +155,6 @@ def add_row():
         "Notes":                         notes,
     }
 
-    # Build row exactly in header order; unknown headers get ""
     row = [values_map.get(h, "") for h in headers]
 
     try:
@@ -186,7 +176,6 @@ def update_row():
         flash("Update failed (bad row or sheet).", "danger")
         return redirect(url_for("admin.dashboard"))
 
-    # Collect header/value pairs from the posted form
     updates = {}
     i = 0
     while True:
@@ -214,7 +203,6 @@ def update_row():
 @admin_bp.route("/delete", methods=["GET", "POST"])
 @login_required
 def delete_row():
-    # Support link (GET ?sheet_row=) and form post
     sheet_row = request.values.get("sheet_row", type=int)
     ws, headers = _open_ws_and_headers()
     if not (ws and headers and sheet_row and sheet_row >= 2):

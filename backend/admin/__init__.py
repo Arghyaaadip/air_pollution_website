@@ -1,27 +1,31 @@
 # backend/admin/__init__.py
-import os, json, functools, re
-from pathlib import Path
-
+import os, os.path, functools, re, bcrypt
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from werkzeug.security import check_password_hash
 
 import gspread
 from gspread import utils as gutils  # for rowcol_to_a1
 
 admin_bp = Blueprint("admin", __name__, template_folder="../templates/admin")
 
-BASE_DIR = Path(__file__).resolve().parents[1]  # backend/
-USERS_JSON = BASE_DIR / "admin_users.json"
-MANAGE_LIMIT = 50  # how many rows to show on the Manage card
+MANAGE_LIMIT = 50  # max rows to show in manage table
+
+ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin")
+ADMIN_PASSWORD_HASH = (os.getenv("ADMIN_PASSWORD_HASH") or "").strip()
 
 
-# ---------------- Auth utils ----------------
-def _get_admin_record():
+def check_admin_password(password: str) -> bool:
+    # If the secret isn't attached / env var missing, deny login
+    if not ADMIN_PASSWORD_HASH:
+        return False
+
     try:
-        data = json.loads(USERS_JSON.read_text(encoding="utf-8"))
-        return (data.get("users") or [])[0]
+        return bcrypt.checkpw(
+            (password or "").encode("utf-8"),
+            ADMIN_PASSWORD_HASH.encode("utf-8")
+        )
     except Exception:
-        return None
+        # Any unexpected formatting issue should fail closed
+        return False
 
 
 def login_required(view):
@@ -45,9 +49,8 @@ def login_submit():
     username = (request.form.get("username") or "").strip()
     password = request.form.get("password") or ""
 
-    admin = _get_admin_record()
-    if admin and username == admin.get("username") and check_password_hash(admin.get("password_hash", ""), password):
-        session["admin"] = username
+    if username == ADMIN_USERNAME and check_admin_password(password):
+        session["admin"] = True   # boolean flag
         flash("Welcome, admin!", "success")
         return redirect(url_for("admin.dashboard"))
 

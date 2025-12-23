@@ -1,9 +1,6 @@
 import argparse
-import bcrypt
 import getpass
-
-def make_hash(password: str) -> str:
-    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt(12)).decode("utf-8")
+from werkzeug.security import generate_password_hash
 
 def prompt_password() -> str:
     while True:
@@ -23,4 +20,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     pw = args.password if (args.password and args.password.strip()) else prompt_password()
-    print(make_hash(pw))
+
+    # Werkzeug-style hash (matches check_password_hash)
+    print(generate_password_hash(pw, method="scrypt"))

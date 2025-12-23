@@ -1,5 +1,8 @@
 # backend/admin/__init__.py
 import os, os.path, functools, re
+import gspread
+from google.auth import default
+from gspread import utils as gutils
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import check_password_hash
 
@@ -45,7 +48,7 @@ def login_submit():
 
     if username == ADMIN_USERNAME and check_admin_password(password):
         session["admin"] = True  # boolean flag
-        flash("Welcome, admin!", "success")
+        flash("Welcome, Margaret!", "success")
         return redirect(url_for("admin.dashboard"))
 
     flash("Invalid username or password.", "danger")
@@ -63,19 +66,24 @@ def logout():
 def _open_ws_and_headers():
     """
     Return (worksheet, header_list) or (None, None) if sheets not configured.
+    Uses Cloud Run runtime service account via google.auth.default().
     """
     sheet_url = os.getenv("SHEET_URL", "")
     m = re.search(r"/spreadsheets/d/([a-zA-Z0-9-_]+)", sheet_url)
-    cred_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "")
-
-    if not (m and cred_path and os.path.exists(cred_path)):
+    if not m:
         return None, None
 
-    gc = gspread.service_account(filename=cred_path)
-    sh = gc.open_by_key(m.group(1))
-    ws = sh.sheet1
-    headers = ws.row_values(1)  # first row is header
-    return ws, headers
+    try:
+        creds, _ = default(scopes=["https://www.googleapis.com/auth/spreadsheets"])
+        gc = gspread.authorize(creds)
+        sh = gc.open_by_key(m.group(1))
+        ws = sh.sheet1
+        headers = ws.row_values(1)
+        return ws, headers
+    except Exception as e:
+        print(f"[ERROR] Sheets auth/open failed: {e}")
+        return None, None
+
 
 
 def _read_rows_for_manage(ws, headers, limit=MANAGE_LIMIT):
